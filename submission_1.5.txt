@@ -1,0 +1,49 @@
+﻿giao@giaoUbuntu:~$ sudo docker run -it --name submission15 ubuntu:xenial sh -c 'echo "input website: "; read website; echo "searching.."; sleep 1; curl http://$website;'
+input website: 
+helsinki.fi
+searching..
+sh: 1: curl: not found
+
+
+giao@giaoUbuntu:~$ sudo docker exec -it submission15 bash
+Error response from daemon: Container 966b38e7a7bc589407053ea8fbe5a731e5a5ab960566fa42d12b2b2cc204906a is not running
+
+giao@giaoUbuntu:~$ sudo docker start submission15
+submission15
+giao@giaoUbuntu:~$ sudo docker exec -it submission15 bash
+root@966b38e7a7bc:/# app-get update
+bash: app-get: command not found
+root@966b38e7a7bc:/# apt-get update
+Get:1 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]
+Get:2 http://archive.ubuntu.com/ubuntu xenial InRelease [247 kB]
+Get:3 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+Get:4 http://security.ubuntu.com/ubuntu xenial-security/main amd64 Packages [1101 kB]
+...                                                                                                              
+Fetched 16.4 MB in 11s (1413 kB/s)                                                                                                                                                                         
+Reading package lists... Done
+root@966b38e7a7bc:/# apt-get install curl
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  ca-certificates krb5-locales libasn1-8-heimdal libcurl3-gnutls libffi6 libgmp10 libgnutls30 libgssapi-krb5-2 libgssapi3-heimdal libhcrypto4-heimdal libheimbase1-heimdal libheimntlm0-heimdal
+...
+Updating certificates in /etc/ssl/certs...
+148 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+root@966b38e7a7bc:/# exit
+exit
+
+
+giao@giaoUbuntu:~$ sudo docker exec -it submission15 sh -c 'echo "input website: "; read website; echo "searching.."; sleep 1; curl http://$website;'
+input website: 
+helsinki.fi
+searching..
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.helsinki.fi/">here</a>.</p>
+</body></html>
